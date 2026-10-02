@@ -1,0 +1,1 @@
+require("dotenv").config(); const mongoose = require("mongoose"); const { UserModel } = require("./model/UserModel"); mongoose.connect(process.env.MONGO_URL).then(async () => { try { await UserModel.create({ email: "t5@t.com", username: "t5", password: "p", mobile: "12" }); console.log("Success"); } catch(e) { console.log("ERROR:", e); } process.exit(0); });
