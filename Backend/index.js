@@ -16,7 +16,7 @@ const PORT = process.env.PORT || 3002;
 const uri = process.env.MONGO_URL;
 
 const app = express();
-app.use(cors({ origin: ["http://localhost:3000", "http://localhost:3001"], methods: ["GET", "POST", "PUT", "DELETE"], credentials: true }));
+app.use(cors({ origin: function(origin, callback) { callback(null, origin || true); }, methods: ["GET", "POST", "PUT", "DELETE"], credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 
@@ -165,10 +165,7 @@ app.post("/signup", async (req, res) => {
     const token = jwt.sign({ id: user._id }, process.env.TOKEN_KEY || "SecretKey", {
       expiresIn: 3 * 24 * 60 * 60,
     });
-    res.cookie("token", token, {
-      withCredentials: true,
-      httpOnly: false,
-    });
+    res.cookie("token", token, { withCredentials: true, httpOnly: false, sameSite: "none", secure: true });
     res.status(201).json({ message: "User signed in successfully", success: true, user });
   } catch (error) {
     console.error(error);
@@ -193,10 +190,7 @@ app.post("/login", async (req, res) => {
     const token = jwt.sign({ id: user._id }, process.env.TOKEN_KEY || "SecretKey", {
       expiresIn: 3 * 24 * 60 * 60,
     });
-    res.cookie("token", token, {
-      withCredentials: true,
-      httpOnly: false,
-    });
+    res.cookie("token", token, { withCredentials: true, httpOnly: false, sameSite: "none", secure: true });
     res.status(201).json({ message: "User logged in successfully", success: true });
   } catch (error) {
     console.error(error);
@@ -225,4 +219,5 @@ app.listen(PORT, () => {
   mongoose.connect(uri);
   console.log("DB connected!");
 });
+
 

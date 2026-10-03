@@ -38,3 +38,7 @@ code {
   border-radius: 10px;
   border: none;
 }
+.nav-link:hover { color: #387ed1 !important; cursor: pointer; transition: 0.2s; }
+
+.navbar-brand:hover { opacity: 0.8; transition: 0.2s; }
+

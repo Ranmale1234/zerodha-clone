@@ -9,7 +9,7 @@ function Signup() {
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:3002/signup", {
+      const response = await fetch((process.env.REACT_APP_BACKEND_URL || "http://localhost:3002") + "/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" }, credentials: "include",
         body: JSON.stringify({ email, username, password, mobile }),
@@ -18,7 +18,7 @@ function Signup() {
       
       if (data.success) {
         // Redirect to dashboard on success
-        window.location.href = "http://localhost:3001";
+        window.location.href = process.env.REACT_APP_DASHBOARD_URL || "http://localhost:3001";
       } else {
         alert("Error from server: " + data.message);
       }

@@ -28,7 +28,7 @@ const initialPositions = [
   ["SBIN", "SELL", 15, "₹808.20", "₹801.10", "+₹106.50"],
 ];
 
-function App() { const [username, setUsername] = useState(""); useEffect(() => { fetch("http://localhost:3002/profile", { credentials: "include" }).then(res => res.json()).then(data => { if(data.status) setUsername(data.user); else window.location.href = "http://localhost:3000/signup"; }).catch(() => window.location.href = "http://localhost:3000/signup"); }, []); 
+function App() { const [username, setUsername] = useState(""); useEffect(() => { fetch((process.env.REACT_APP_BACKEND_URL || "http://localhost:3002") + "/profile", { credentials: "include" }).then(res => res.json()).then(data => { if(data.status) setUsername(data.user); else window.location.href = (process.env.REACT_APP_FRONTEND_URL || "http://localhost:3000") + "/signup"; }).catch(() => window.location.href = (process.env.REACT_APP_FRONTEND_URL || "http://localhost:3000") + "/signup"); }, []); 
   const [page, setPage] = useState("Dashboard");
   const [stocks] = useState(initialStocks);
   const [orders, setOrders] = useState([]);
@@ -41,7 +41,7 @@ function App() { const [username, setUsername] = useState(""); useEffect(() => {
   const [allPositions, setAllPositions] = useState(initialPositions);
 
   React.useEffect(() => {
-    fetch("http://localhost:3002/allHoldings")
+    fetch((process.env.REACT_APP_BACKEND_URL || "http://localhost:3002") + "/allHoldings")
       .then((res) => res.json())
       .then((data) => {
         const formattedHoldings = data.map((item) => [
@@ -56,7 +56,7 @@ function App() { const [username, setUsername] = useState(""); useEffect(() => {
       })
       .catch((err) => console.log(err));
 
-    fetch("http://localhost:3002/allPositions")
+    fetch((process.env.REACT_APP_BACKEND_URL || "http://localhost:3002") + "/allPositions")
       .then((res) => res.json())
       .then((data) => {
         const formattedPositions = data.map((item) => [
@@ -93,7 +93,7 @@ function App() { const [username, setUsername] = useState(""); useEffect(() => {
     };
 
     // Also send to backend
-    fetch("http://localhost:3002/newOrder", {
+    fetch((process.env.REACT_APP_BACKEND_URL || "http://localhost:3002") + "/newOrder", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -115,7 +115,7 @@ function App() { const [username, setUsername] = useState(""); useEffect(() => {
       <div className="app">
       {/* Top Bar */}
       <header className="top">
-        <div className="logo" onClick={() => window.location.href = "http://localhost:3000"}>
+        <div className="logo" onClick={() => window.location.href = process.env.REACT_APP_FRONTEND_URL || "http://localhost:3000"}>
           <b>z</b>
           <span>zerodha</span>
         </div>
@@ -164,7 +164,7 @@ function App() { const [username, setUsername] = useState(""); useEffect(() => {
             <button
               onClick={() => {
                 setProfile(false);
-                window.location.href = "http://localhost:3000";
+                window.location.href = process.env.REACT_APP_FRONTEND_URL || "http://localhost:3000";
               }}
             >
               Back to Home (3000)
