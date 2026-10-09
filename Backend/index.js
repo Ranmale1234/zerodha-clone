@@ -20,6 +20,16 @@ app.use(cors({ origin: function(origin, callback) { callback(null, origin || tru
 app.use(express.json());
 app.use(cookieParser());
 
+app.use(async (req, res, next) => {
+  if (mongoose.connection.readyState >= 1) return next();
+  try {
+    await mongoose.connect(process.env.MONGO_URL, { serverSelectionTimeoutMS: 5000 });
+    next();
+  } catch (err) {
+    res.status(500).json({ message: 'DB connection failed: ' + err.message });
+  }
+});
+
 app.post("/newOrder", async (req, res) => {
   let newOrder = new OrdersModel({
     name: req.body.name,
@@ -223,6 +233,7 @@ app.listen(PORT, () => {
 });
 
 module.exports = app;
+
 
 
 
