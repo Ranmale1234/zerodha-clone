@@ -176,7 +176,7 @@ app.post("/signup", async (req, res) => {
       expiresIn: 3 * 24 * 60 * 60,
     });
     res.cookie("token", token, { withCredentials: true, httpOnly: false, sameSite: "none", secure: true });
-    res.status(201).json({ message: "User signed in successfully", success: true, user });
+    res.status(201).json({ message: "User signed in successfully", success: true, token, user });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: error.message || error.toString(), success: false });
@@ -201,7 +201,7 @@ app.post("/login", async (req, res) => {
       expiresIn: 3 * 24 * 60 * 60,
     });
     res.cookie("token", token, { withCredentials: true, httpOnly: false, sameSite: "none", secure: true });
-    res.status(201).json({ message: "User logged in successfully", success: true });
+    res.status(201).json({ message: "User logged in successfully", success: true, token });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: error.message || error.toString(), success: false });
@@ -210,7 +210,7 @@ app.post("/login", async (req, res) => {
 
 app.get("/profile", async (req, res) => {
   try {
-    const token = req.cookies.token;
+    let token = req.cookies.token; if (req.headers.authorization && req.headers.authorization.startsWith("Bearer ")) token = req.headers.authorization.split(" ")[1];
     if (!token) return res.json({ status: false });
     
     jwt.verify(token, process.env.TOKEN_KEY || "SecretKey", async (err, decoded) => {
@@ -233,6 +233,7 @@ app.listen(PORT, () => {
 });
 
 module.exports = app;
+
 
 
 

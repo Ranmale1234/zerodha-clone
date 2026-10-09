@@ -28,7 +28,7 @@ const initialPositions = [
   ["SBIN", "SELL", 15, "₹808.20", "₹801.10", "+₹106.50"],
 ];
 
-function App() { const [username, setUsername] = useState(""); useEffect(() => { fetch("https://zerodha-clone-sepia-five.vercel.app" + "/profile", { credentials: "include" }).then(res => res.json()).then(data => { if(data.status) setUsername(data.user); else window.location.href = "https://zerodha-frontend-live.vercel.app" + "/signup"; }).catch(() => window.location.href = "https://zerodha-frontend-live.vercel.app" + "/signup"); }, []); 
+function App() { const [username, setUsername] = useState(''); useEffect(() => { const urlParams = new URLSearchParams(window.location.search); let token = urlParams.get('token') || localStorage.getItem('token'); if (urlParams.get('token')) { localStorage.setItem('token', token); window.history.replaceState({}, document.title, '/'); } if (!token) { window.location.href = 'https://zerodha-frontend-live.vercel.app/signup'; return; } fetch('https://zerodha-clone-sepia-five.vercel.app/profile', { headers: { 'Authorization': 'Bearer ' + token } }).then(res => res.json()).then(data => { if(data.status) setUsername(data.user); else window.location.href = 'https://zerodha-frontend-live.vercel.app/signup'; }).catch(() => window.location.href = 'https://zerodha-frontend-live.vercel.app/signup'); }, []); 
   const [page, setPage] = useState("Dashboard");
   const [stocks] = useState(initialStocks);
   const [orders, setOrders] = useState([]);
@@ -692,6 +692,7 @@ function Empty({ title, sub }) {
 }
 
 export default App;
+
 
 
 
