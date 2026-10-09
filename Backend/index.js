@@ -23,7 +23,8 @@ app.use(cookieParser());
 app.use(async (req, res, next) => {
   if (mongoose.connection.readyState === 1) return next();
   try {
-    await mongoose.connect(process.env.MONGO_URL, { serverSelectionTimeoutMS: 5000 });
+    const mongoUrl = "mongodb://premranmale_db_user:fwYjx6cdPsBmqqK1@ac-p0r7pb9-shard-00-00.bscd2oi.mongodb.net:27017,ac-p0r7pb9-shard-00-01.bscd2oi.mongodb.net:27017,ac-p0r7pb9-shard-00-02.bscd2oi.mongodb.net:27017/zerodha?ssl=true&replicaSet=atlas-n5xm8a-shard-0&authSource=admin&retryWrites=true&w=majority&appName=ZerodhaCloneCluster";
+    await mongoose.connect(mongoUrl, { serverSelectionTimeoutMS: 5000 });
     next();
   } catch (err) {
     res.status(500).json({ message: 'DB connection failed: ' + err.message });

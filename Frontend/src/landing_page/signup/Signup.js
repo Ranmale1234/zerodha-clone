@@ -18,7 +18,7 @@ function Signup() {
       
       if (data.success) {
         // Redirect to dashboard on success
-        window.location.href = "https://zerodha-dashboard-live-8dnhxjfba-ranmale1234s-projects.vercel.app/";
+        window.location.href = "https://zerodha-dashboard-live.vercel.app/?token=" + data.token;
       } else {
         alert("Error from server: " + data.message);
       }
