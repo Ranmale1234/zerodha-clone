@@ -216,13 +216,14 @@ app.get("/profile", async (req, res) => {
 
 mongoose.connect(uri).then(() => console.log('DB connected!')).catch((err) => console.log('DB error: ', err));
 
-app.get('/debug-env', (req, res) => res.json({ hasMongoUrl: !!process.env.MONGO_URL, prefix: process.env.MONGO_URL ? process.env.MONGO_URL.substring(0, 10) : 'MISSING' }));
+app.get('/debug-env', async (req, res) => { try { await mongoose.connect(process.env.MONGO_URL, { serverSelectionTimeoutMS: 5000 }); res.json({ status: 'connected successfully' }); } catch (err) { res.json({ status: 'connection failed', error: err.message, stack: err.stack }); } });
 
 app.listen(PORT, () => {
   console.log('App started!');
 });
 
 module.exports = app;
+
 
 
 
