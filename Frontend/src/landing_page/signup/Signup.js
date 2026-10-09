@@ -9,7 +9,7 @@ function Signup() {
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("https://zerodha-clone-cym2nlwjl-ranmale1234s-projects.vercel.app/signup", {
+      const response = await fetch("https://zerodha-clone-sepia-five.vercel.app/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" }, credentials: "include",
         body: JSON.stringify({ email, username, password, mobile }),

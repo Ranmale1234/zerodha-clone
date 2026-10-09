@@ -28,7 +28,7 @@ const initialPositions = [
   ["SBIN", "SELL", 15, "₹808.20", "₹801.10", "+₹106.50"],
 ];
 
-function App() { const [username, setUsername] = useState(""); useEffect(() => { fetch((process.env.REACT_APP_BACKEND_URL || "http://localhost:3002") + "/profile", { credentials: "include" }).then(res => res.json()).then(data => { if(data.status) setUsername(data.user); else window.location.href = (process.env.REACT_APP_FRONTEND_URL || "http://localhost:3000") + "/signup"; }).catch(() => window.location.href = (process.env.REACT_APP_FRONTEND_URL || "http://localhost:3000") + "/signup"); }, []); 
+function App() { const [username, setUsername] = useState(""); useEffect(() => { fetch("https://zerodha-clone-sepia-five.vercel.app" + "/profile", { credentials: "include" }).then(res => res.json()).then(data => { if(data.status) setUsername(data.user); else window.location.href = "https://zerodha-frontend-live.vercel.app" + "/signup"; }).catch(() => window.location.href = "https://zerodha-frontend-live.vercel.app" + "/signup"); }, []); 
   const [page, setPage] = useState("Dashboard");
   const [stocks] = useState(initialStocks);
   const [orders, setOrders] = useState([]);
@@ -41,7 +41,7 @@ function App() { const [username, setUsername] = useState(""); useEffect(() => {
   const [allPositions, setAllPositions] = useState(initialPositions);
 
   React.useEffect(() => {
-    fetch((process.env.REACT_APP_BACKEND_URL || "http://localhost:3002") + "/allHoldings")
+    fetch("https://zerodha-clone-sepia-five.vercel.app" + "/allHoldings")
       .then((res) => res.json())
       .then((data) => {
         const formattedHoldings = data.map((item) => [
@@ -56,7 +56,7 @@ function App() { const [username, setUsername] = useState(""); useEffect(() => {
       })
       .catch((err) => console.log(err));
 
-    fetch((process.env.REACT_APP_BACKEND_URL || "http://localhost:3002") + "/allPositions")
+    fetch("https://zerodha-clone-sepia-five.vercel.app" + "/allPositions")
       .then((res) => res.json())
       .then((data) => {
         const formattedPositions = data.map((item) => [
@@ -93,7 +93,7 @@ function App() { const [username, setUsername] = useState(""); useEffect(() => {
     };
 
     // Also send to backend
-    fetch((process.env.REACT_APP_BACKEND_URL || "http://localhost:3002") + "/newOrder", {
+    fetch("https://zerodha-clone-sepia-five.vercel.app" + "/newOrder", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
