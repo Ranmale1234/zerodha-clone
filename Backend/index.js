@@ -214,10 +214,13 @@ app.get("/profile", async (req, res) => {
   }
 });
 
+mongoose.connect(uri).then(() => console.log('DB connected!')).catch((err) => console.log('DB error: ', err));
+
 app.listen(PORT, () => {
-  console.log("App started!");
-  mongoose.connect(uri);
-  console.log("DB connected!");
+  console.log('App started!');
 });
+
+module.exports = app;
+
 
 
