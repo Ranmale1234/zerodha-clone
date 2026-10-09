@@ -9,7 +9,7 @@ function Signup() {
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch((process.env.REACT_APP_BACKEND_URL || "http://localhost:3002") + "/signup", {
+      const response = await fetch("https://zerodha-clone-cym2nlwjl-ranmale1234s-projects.vercel.app/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" }, credentials: "include",
         body: JSON.stringify({ email, username, password, mobile }),
@@ -18,7 +18,7 @@ function Signup() {
       
       if (data.success) {
         // Redirect to dashboard on success
-        window.location.href = process.env.REACT_APP_DASHBOARD_URL || "http://localhost:3001";
+        window.location.href = "https://zerodha-dashboard-live-8dnhxjfba-ranmale1234s-projects.vercel.app/";
       } else {
         alert("Error from server: " + data.message);
       }

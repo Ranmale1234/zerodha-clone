@@ -56,7 +56,7 @@ function Navbar() {
             <li className="nav-item ms-lg-2">
               <a
                 className="btn btn-outline-primary btn-sm px-3 py-1 mt-1"
-                href={process.env.REACT_APP_DASHBOARD_URL || "http://localhost:3001"}
+                href="https://zerodha-dashboard-live-8dnhxjfba-ranmale1234s-projects.vercel.app/"
                 target="_blank"
                 rel="noreferrer"
               >
