@@ -216,11 +216,14 @@ app.get("/profile", async (req, res) => {
 
 mongoose.connect(uri).then(() => console.log('DB connected!')).catch((err) => console.log('DB error: ', err));
 
+app.get('/debug-env', (req, res) => res.json({ hasMongoUrl: !!process.env.MONGO_URL, prefix: process.env.MONGO_URL ? process.env.MONGO_URL.substring(0, 10) : 'MISSING' }));
+
 app.listen(PORT, () => {
   console.log('App started!');
 });
 
 module.exports = app;
+
 
 
 
