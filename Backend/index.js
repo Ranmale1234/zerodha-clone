@@ -21,7 +21,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use(async (req, res, next) => {
-  if (mongoose.connection.readyState >= 1) return next();
+  if (mongoose.connection.readyState === 1) return next();
   try {
     await mongoose.connect(process.env.MONGO_URL, { serverSelectionTimeoutMS: 5000 });
     next();
@@ -224,7 +224,7 @@ app.get("/profile", async (req, res) => {
   }
 });
 
-mongoose.connect(uri).then(() => console.log('DB connected!')).catch((err) => console.log('DB error: ', err));
+
 
 app.get('/debug-env', async (req, res) => { try { await mongoose.connect(process.env.MONGO_URL, { serverSelectionTimeoutMS: 5000 }); res.json({ status: 'connected successfully' }); } catch (err) { res.json({ status: 'connection failed', error: err.message, stack: err.stack }); } });
 
@@ -233,6 +233,7 @@ app.listen(PORT, () => {
 });
 
 module.exports = app;
+
 
 
 
